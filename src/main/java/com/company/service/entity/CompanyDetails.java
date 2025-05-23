@@ -1,8 +1,10 @@
 package com.company.service.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "company_details")
 public class CompanyDetails {
     @Id
