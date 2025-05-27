@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CompanyDetailsRepository extends JpaRepository<CompanyDetails, Integer> {
     CompanyDetails getByCompanyDetailsId(int companyDetailsId);
+
+    CompanyDetails getByCompanyName(String companyName);
 }

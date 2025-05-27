@@ -14,13 +14,13 @@ public class CompanyDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int companyDetailsId;
-
     private String companyName;
     private String industry;
     private int  companySize;
     private String companyDescription;
     private String companyWebsite;
     private String companyLocation;
+
 
 
 }
