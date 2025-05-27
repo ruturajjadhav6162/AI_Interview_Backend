@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CompnayDetailsService implements CompanyDetailsServiceImpl{
+public class CompanyDetailsService implements CompanyDetailsServiceImpl{
     private CompanyDetailsRepository companyDetailsRepository;
     private CompanyDetails companyDetails;
 
