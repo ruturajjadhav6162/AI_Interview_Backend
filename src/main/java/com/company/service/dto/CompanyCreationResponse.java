@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CompanyResponse {
+public class CompanyCreationResponse {
     String companyName;
     String companyDescription;
     String responseMessage;

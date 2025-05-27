@@ -2,9 +2,13 @@ package com.company.service.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Builder
+@Getter
+@Setter
 @Table(name = "company_details")
 public class CompanyDetails {
     @Id
