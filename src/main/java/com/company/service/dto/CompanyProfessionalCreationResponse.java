@@ -13,3 +13,5 @@ public class CompanyProfessionalCreationResponse {
     private String professionalCompany;
     private float phoneNumber;
 }
+
+
