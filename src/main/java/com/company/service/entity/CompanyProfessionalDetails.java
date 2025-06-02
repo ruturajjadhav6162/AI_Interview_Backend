@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Primary;
 @Table(name="Company_Professional_Details")
 @Getter
 @Setter
-@AllArgsConstructor
 public class CompanyProfessionalDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
