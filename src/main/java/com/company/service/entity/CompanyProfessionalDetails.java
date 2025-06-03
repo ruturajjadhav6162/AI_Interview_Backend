@@ -18,14 +18,20 @@ public class CompanyProfessionalDetails {
     private String emailId;
     private float phoneNumber;
 
-    private int companyId;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private CompanyDetails company;
 
-    public CompanyProfessionalDetails(String firstName,String lastName,String emailId,float phoneNumber,int companyId) {
+    public CompanyProfessionalDetails(String firstName,String lastName,String emailId,float phoneNumber,CompanyDetails company) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
         this.phoneNumber = phoneNumber;
-        this.companyId = companyId;
+        this.company=company;
+    }
+
+    public CompanyProfessionalDetails() {
+
     }
 }
 

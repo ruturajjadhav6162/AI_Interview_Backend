@@ -11,6 +11,6 @@ public interface CompanyDetailsService {
     CompanyCreationResponse createCompany(CompanyServiceInput companyServiceInput);
     CompanyDetailsGet getCompanyDetails(Integer companyId);
     List<String> getAllCompanyName();
-    int companyDetailsByName(String companyName);
+    CompanyDetails companyDetailsByName(String companyName);
 
 }

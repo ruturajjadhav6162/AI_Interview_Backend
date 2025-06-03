@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Builder
 @Getter
@@ -21,6 +23,6 @@ public class CompanyDetails {
     private String companyWebsite;
     private String companyLocation;
 
-
-
+    @OneToMany(mappedBy = "company" , cascade = CascadeType.ALL)
+    private List<CompanyProfessionalDetails> companyProfessionalDetails;
 }

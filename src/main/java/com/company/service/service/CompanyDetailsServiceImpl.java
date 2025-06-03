@@ -56,8 +56,8 @@ public class CompanyDetailsServiceImpl implements CompanyDetailsService {
     }
 
     @Override
-    public int companyDetailsByName(String companyName){
+    public CompanyDetails companyDetailsByName(String companyName){
         companyDetails=companyDetailsRepository.getByCompanyName(companyName);
-        return companyDetails.getCompanyDetailsId();
+        return companyDetails;
     }
 }

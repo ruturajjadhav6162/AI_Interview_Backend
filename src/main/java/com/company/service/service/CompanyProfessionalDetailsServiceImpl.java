@@ -2,6 +2,7 @@ package com.company.service.service;
 
 import com.company.service.dto.CompanyProfessionalCreationResponse;
 import com.company.service.dto.CompanyProfessionalDetailsInput;
+import com.company.service.entity.CompanyDetails;
 import com.company.service.entity.CompanyProfessionalDetails;
 import com.company.service.repository.CompanyDetailsRepository;
 import com.company.service.repository.CompanyProfessionalDetailsRepostory;
@@ -13,12 +14,13 @@ public class CompanyProfessionalDetailsServiceImpl implements CompanyProfessiona
 //    private CompanyDetailsRepository companyDetailsRepository;
     private CompanyDetailsServiceImpl companyDetailsService;
     private CompanyProfessionalDetailsRepostory companyProfessionalDetailsRepostory;
+    private CompanyDetails companyDetails;
 
     @Override
     public CompanyProfessionalCreationResponse professionalCreation(CompanyProfessionalDetailsInput companyProfessionalDetailsInput) throws RuntimeException{
         try{
-            int companyId=companyDetailsService.companyDetailsByName(companyProfessionalDetailsInput.getCompanyName());
-            CompanyProfessionalDetails companyProfessionalDetails=new CompanyProfessionalDetails(companyProfessionalDetailsInput.getFirstName(), companyProfessionalDetailsInput.getLastName(), companyProfessionalDetailsInput.getEmailId(), companyProfessionalDetailsInput.getPhoneNumber(),companyId);
+            CompanyDetails company=companyDetailsService.companyDetailsByName(companyProfessionalDetailsInput.getCompanyName());
+            CompanyProfessionalDetails companyProfessionalDetails=new CompanyProfessionalDetails(companyProfessionalDetailsInput.getFirstName(), companyProfessionalDetailsInput.getLastName(), companyProfessionalDetailsInput.getEmailId(), companyProfessionalDetailsInput.getPhoneNumber(),company);
             companyProfessionalDetailsRepostory.save(companyProfessionalDetails);
         }
         catch(Exception e){
