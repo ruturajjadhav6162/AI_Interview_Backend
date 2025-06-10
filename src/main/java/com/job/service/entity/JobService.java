@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 @Entity
 @Data
+@Table(name = "job_service")
 public class JobService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

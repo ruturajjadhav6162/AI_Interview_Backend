@@ -5,11 +5,16 @@ import com.job.service.dto.JobServiceInput;
 import com.job.service.entity.JobService;
 import com.job.service.repository.JobServiceRepository;
 import com.job.service.utils.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+@Service
 public class JobServices implements JobServiceImpl{
-
+    @Autowired
     private JobServiceRepository jobServiceRepository;
 
     @Override
@@ -32,7 +37,7 @@ public class JobServices implements JobServiceImpl{
         jobservice.setBenefits(jobserviceinput.getBenefits());
         jobservice.setInterviewProcess(jobserviceinput.getInterviewProcess());
 //        jobservice.setCompanyId(companyId);
-        jobservice.setApplicationDeadline(jobservice.getApplicationDeadline());
+        jobservice.setApplicationDeadline(jobserviceinput.getApplicationDeadline());
 
         jobServiceRepository.save(jobservice);
 
@@ -45,8 +50,16 @@ public class JobServices implements JobServiceImpl{
         return new ResponseEntity<>(jobResponse, HttpStatus.OK);
     }
 
-    public int get_job_count_by_companyid(){
-        int company_id=0;
-        return (int)jobServiceRepository.countAllByCompanyId(company_id);
+    @Override
+    public HashMap<String, Object> get_job_count_by_companyid(int company_id){
+//        int company_id=0;
+        HashMap<String,Object> jobServiceMap=new HashMap<>();
+        List<JobService> jobServiceList=jobServiceRepository.findAllByCompanyId(company_id);
+        int count=jobServiceRepository.countAllByCompanyId(company_id);
+        jobServiceMap.put("jobCount",count);
+        jobServiceMap.put("jobServiceList",jobServiceList);
+        jobServiceMap.put("topJobs", jobServiceList.stream().limit(5).toList());
+        return jobServiceMap;
     }
+
 }
