@@ -9,4 +9,6 @@ import java.util.List;
 public interface JobServiceRepository extends JpaRepository<JobService, Integer> {
     List<JobService> findAllByCompanyId(int companyId);
     int countAllByCompanyId(int companyId);
+
+    List<JobService> findAllByStatus(String status);
 }

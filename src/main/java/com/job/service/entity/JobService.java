@@ -21,7 +21,9 @@ public class JobService {
 
     @Temporal(TemporalType.DATE)
     private LocalDate applicationDeadline;
-
+    @Temporal(TemporalType.DATE)
+    private LocalDate createdAt;
+    private String status;
     private String teamSize;
     private List<String> tags;
     private boolean remoteWorkAvailable;
@@ -34,4 +36,10 @@ public class JobService {
     private String interviewProcess;
     private int companyId;
 //    private String aboutCompany;
+ @PrePersist
+    private void prePersist() {
+     this.status="ACTIVE";
+     this.createdAt = LocalDate.now();
+ }
 }
+
