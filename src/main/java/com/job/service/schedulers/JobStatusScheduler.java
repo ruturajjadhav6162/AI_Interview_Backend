@@ -17,10 +17,9 @@ public class JobStatusScheduler {
     @Scheduled(cron = "0 0 12 * * *" )
     public void jobStatusScheduler() {
         List<JobService> jobServices = jobServiceRepository.findAllByStatus("ACTIVE");
-        System.out.println("Inside Scheduler");
         jobServices.forEach(jobService -> {
             if(LocalDate.now().equals(jobService.getApplicationDeadline())){
-            jobService.setStatus("INACTIVE");
+            jobService.setStatus("EXPIRED");
             jobServiceRepository.save(jobService);
             System.out.println(jobService.getJobTitle()+" "+jobService.getApplicationDeadline()+" "+jobService.getStatus());
         }});
