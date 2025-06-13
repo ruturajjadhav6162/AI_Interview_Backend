@@ -11,9 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CompanyProfessionalDetailsInput {
     private String companyName;
+    private String username;
     private  String firstName;
     private  String lastName;
     private String emailId;
-    private float phoneNumber;
+    private long phoneNumber;
 
 }

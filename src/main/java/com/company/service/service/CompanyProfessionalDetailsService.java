@@ -7,4 +7,6 @@ import com.company.service.entity.CompanyProfessionalDetails;
 public interface CompanyProfessionalDetailsService {
     CompanyProfessionalCreationResponse professionalCreation(CompanyProfessionalDetailsInput companyProfessionalDetailsInput);
     CompanyProfessionalDetails getProfessionalDetails(int id);
+    CompanyProfessionalDetails professionalDetailsByUsername(String username);
+    int getCompayIdByUsername(String username);
 }

@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CompanyProfessionalCreationResponse {
     private String professionalName;
+    private String username;
     private String emailId;
     private String professionalCompany;
-    private float phoneNumber;
+    private long phoneNumber;
 }
 
 

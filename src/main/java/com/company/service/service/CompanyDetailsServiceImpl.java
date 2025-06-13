@@ -5,6 +5,7 @@ import com.company.service.dto.CompanyDetailsGet;
 import com.company.service.dto.CompanyServiceInput;
 import com.company.service.entity.CompanyDetails;
 import com.company.service.repository.CompanyDetailsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Service
 public class CompanyDetailsServiceImpl implements CompanyDetailsService {
+    @Autowired
     private CompanyDetailsRepository companyDetailsRepository;
     private CompanyDetails companyDetails;
 
@@ -28,6 +30,7 @@ public class CompanyDetailsServiceImpl implements CompanyDetailsService {
                 .build();
         try{companyDetailsRepository.save(companyDetails);}
         catch(Exception e){
+            System.out.println(e);
             throw new RuntimeException("Error while saving company information");
         }
         return new CompanyCreationResponse(companyServiceInput.getCompanyName(),companyServiceInput.getCompanyDescription(),"Company Created Successfully");

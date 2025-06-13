@@ -6,13 +6,16 @@ import com.company.service.entity.CompanyDetails;
 import com.company.service.entity.CompanyProfessionalDetails;
 import com.company.service.repository.CompanyDetailsRepository;
 import com.company.service.repository.CompanyProfessionalDetailsRepostory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyProfessionalDetailsServiceImpl implements CompanyProfessionalDetailsService {
 
 //    private CompanyDetailsRepository companyDetailsRepository;
+    @Autowired
     private CompanyDetailsServiceImpl companyDetailsService;
+    @Autowired
     private CompanyProfessionalDetailsRepostory companyProfessionalDetailsRepostory;
     private CompanyDetails companyDetails;
 
@@ -20,13 +23,14 @@ public class CompanyProfessionalDetailsServiceImpl implements CompanyProfessiona
     public CompanyProfessionalCreationResponse professionalCreation(CompanyProfessionalDetailsInput companyProfessionalDetailsInput) throws RuntimeException{
         try{
             CompanyDetails company=companyDetailsService.companyDetailsByName(companyProfessionalDetailsInput.getCompanyName());
-            CompanyProfessionalDetails companyProfessionalDetails=new CompanyProfessionalDetails(companyProfessionalDetailsInput.getFirstName(), companyProfessionalDetailsInput.getLastName(), companyProfessionalDetailsInput.getEmailId(), companyProfessionalDetailsInput.getPhoneNumber(),company);
+            CompanyProfessionalDetails companyProfessionalDetails=new CompanyProfessionalDetails(companyProfessionalDetailsInput.getFirstName(), companyProfessionalDetailsInput.getLastName(),companyProfessionalDetailsInput.getUsername(), companyProfessionalDetailsInput.getEmailId(), companyProfessionalDetailsInput.getPhoneNumber(),company);
             companyProfessionalDetailsRepostory.save(companyProfessionalDetails);
         }
         catch(Exception e){
+            System.out.println(e);
             throw new RuntimeException("Error saving company professional details");
         }
-        return new CompanyProfessionalCreationResponse(companyProfessionalDetailsInput.getFirstName()+" "+companyProfessionalDetailsInput.getLastName(),companyProfessionalDetailsInput.getEmailId(),companyProfessionalDetailsInput.getCompanyName(),companyProfessionalDetailsInput.getPhoneNumber());
+        return new CompanyProfessionalCreationResponse(companyProfessionalDetailsInput.getFirstName()+" "+companyProfessionalDetailsInput.getLastName(),companyProfessionalDetailsInput.getUsername(),companyProfessionalDetailsInput.getEmailId(),companyProfessionalDetailsInput.getCompanyName(),companyProfessionalDetailsInput.getPhoneNumber());
     }
 
     @Override
@@ -38,6 +42,16 @@ public class CompanyProfessionalDetailsServiceImpl implements CompanyProfessiona
         else{
             throw new RuntimeException("Professional details not found");
         }
+    }
+
+    @Override
+    public CompanyProfessionalDetails professionalDetailsByUsername(String username) {
+        return companyProfessionalDetailsRepostory.findByUsername(username).orElse(null);
+    }
+
+    @Override
+    public int getCompayIdByUsername(String username) {
+        return professionalDetailsByUsername(username).getCompany().getCompanyDetailsId();
     }
 
 

@@ -10,8 +10,4 @@ public class CompanyServiceInput {
     private String companyDescription;
     private String companyWebsite;
     private String companyLocation;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String emailID;
 }

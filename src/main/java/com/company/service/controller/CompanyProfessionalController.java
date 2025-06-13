@@ -22,7 +22,7 @@ public class CompanyProfessionalController {
     }
 
     @PostMapping("createProfessional")
-    public CompanyProfessionalCreationResponse professionalCreation(CompanyProfessionalDetailsInput companyProfessionalDetailsInput){
+    public CompanyProfessionalCreationResponse professionalCreation(@RequestBody CompanyProfessionalDetailsInput companyProfessionalDetailsInput){
         return companyProfessionalDetailsService.professionalCreation(companyProfessionalDetailsInput);
     }
 }
