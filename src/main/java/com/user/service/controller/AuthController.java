@@ -20,8 +20,6 @@ public class AuthController {
     @PostMapping("/token")
     public String generateToken(@RequestBody AuthRequest authRequest) {
         try {
-
-
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );

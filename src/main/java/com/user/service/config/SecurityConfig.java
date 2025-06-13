@@ -44,8 +44,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        return new ProviderManager(daoAuthenticationProvider);
-    }
+        return new ProviderManager(daoAuthenticationProvider);    }
     @Autowired
     UserDetaiilsRepsitory userDetaiilsRepsitory;
     @Bean

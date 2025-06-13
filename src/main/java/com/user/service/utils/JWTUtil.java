@@ -1,5 +1,6 @@
 package com.user.service.utils;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -23,5 +24,27 @@ public class JWTUtil {
                 .expiration(expiry)
                 .signWith( SECRET_KEY)
                 .compact();
+    }
+    
+    public String extractUsername(String token) {
+        Claims body= extractClaims(token);
+        return body.getSubject();
+    }
+
+    private Claims extractClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(SECRET_KEY)
+                .build()
+                .parseEncryptedClaims(token)
+                .getPayload();
+    }
+
+    public boolean validate(String username, String username1,String token) {
+        return username.equals(username1)&& isTokenExpired(token);-
+    }
+
+    private boolean isTokenExpired(String token) {
+        Claims body = extractClaims(token);
+        return body.getExpiration().before(new Date());
     }
 }
