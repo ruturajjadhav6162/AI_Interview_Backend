@@ -13,5 +13,4 @@ public class JobResponse {
     private String jobTitle;
     private String jobDescription;
     private String jobResponseMessage;
-
 }
