@@ -2,16 +2,19 @@ package com.job.service.service;
 
 import com.job.service.dto.JobResponse;
 import com.job.service.dto.JobServiceInput;
+import com.job.service.dto.UserDetailsFromToken;
 import com.job.service.entity.JobService;
 import com.job.service.repository.JobServiceRepository;
 import com.job.service.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+
 @Service
 public class JobServices implements JobServiceImpl{
     @Autowired
@@ -20,6 +23,9 @@ public class JobServices implements JobServiceImpl{
     @Override
     public ResponseEntity<JobResponse> addJob(JobServiceInput jobserviceinput) {
         JobService jobservice = new JobService();
+        UserDetailsFromToken userDetails = (UserDetailsFromToken) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int companyId = userDetails.getCompanyId();
+        jobservice.setCompanyId(companyId);
         jobservice.setJobTitle(jobserviceinput.getJobTitle());
         jobservice.setDepartment(jobserviceinput.getDepartment());
         jobservice.setLocation(jobserviceinput.getLocation());
@@ -60,6 +66,11 @@ public class JobServices implements JobServiceImpl{
         jobServiceMap.put("jobServiceList",jobServiceList);
         jobServiceMap.put("topJobs", jobServiceList.stream().limit(5).toList());
         return jobServiceMap;
+    }
+
+    @Override
+    public List<JobService> getAllJobs(){
+        return jobServiceRepository.findAll();
     }
 
 }

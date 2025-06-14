@@ -1,11 +1,13 @@
 package com.job.service.filter;
 
+import com.job.service.dto.UserDetailsFromToken;
 import com.job.service.utils.JWTUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +37,8 @@ public class JWTFilter extends OncePerRequestFilter {
                 Claims body=jwtUtil.extractToken(token);
                 String role = (String) body.get("role");
                 List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken((Object) body.getSubject(),  null, authorities);
+                UserDetailsFromToken userDetailsFromToken= new UserDetailsFromToken(body.getSubject(),role,body.get("companyId", Integer.class), body.get("tokenFrom",String.class));
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetailsFromToken,  null, authorities);
                 authentication.setDetails(new WebAuthenticationDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
