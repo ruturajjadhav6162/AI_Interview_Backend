@@ -1,6 +1,8 @@
 package com.user.service.config;
 
+import com.user.service.dto.Role;
 import com.user.service.entity.Users;
+import com.user.service.filter.JWTFilter;
 import com.user.service.repository.UserDetaiilsRepsitory;
 import com.user.service.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +19,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    JWTFilter jwtFilter;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/user/token").permitAll().anyRequest().authenticated())
-                 .httpBasic(withDefaults());
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
     @Bean
@@ -43,7 +48,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder){
         DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         return new ProviderManager(daoAuthenticationProvider);    }
     @Autowired
     UserDetaiilsRepsitory userDetaiilsRepsitory;
@@ -54,7 +59,7 @@ public class SecurityConfig {
             Users users=new Users();
             users.setUsername("user");
             users.setPassword(passwordEncoder.encode("user"));
-            users.setRole("ADMIN");
+            users.setRole(Role.USER);
             userDetaiilsRepsitory.deleteAll();
             userDetaiilsRepsitory.save(users);
             System.out.println("User Created");
