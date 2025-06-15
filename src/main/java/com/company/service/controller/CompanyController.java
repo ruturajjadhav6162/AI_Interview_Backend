@@ -31,8 +31,8 @@ public class CompanyController {
        return companyDetailsService.createCompany(companyServiceInput);
    }
 
-   @GetMapping("companyDetails")
-    public CompanyDetailsGet getCompanyDetails(@RequestParam int id) {
+   @GetMapping("companyDetails/{id}")
+    public CompanyDetailsGet getCompanyDetails(@PathVariable int id) {
        return companyDetailsService.getCompanyDetails(id);
    }
 

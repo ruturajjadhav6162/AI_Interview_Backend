@@ -36,7 +36,7 @@ public class AuthController {
         if (authorization != null && authorization.startsWith("Bearer ")) {
             token = authorization.substring(7);
             Claims body = jwtUtil.extractToken(token);
-            return body.getSubject()+" "+body.get("companyid",Integer.class)+" "+body.get("role",String.class);
+            return body.get("tokenFrom",String.class)+" "+body.getSubject()+" "+body.get("companyId",Integer.class)+" "+body.get("role",String.class);
         }
         throw new RuntimeException("Error extracting details");
     }

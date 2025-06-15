@@ -55,7 +55,7 @@ public class JWTUtil {
         }
         if (body != null) {
             HashMap<String, Object> claims = new HashMap<>();
-            claims.put("companyid", companyid);
+            claims.put("companyId", companyid);
             claims.put("role", body.get("role"));
             claims.put("tokenFrom","Company_Service");
 

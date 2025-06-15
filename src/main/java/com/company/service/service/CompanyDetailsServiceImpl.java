@@ -15,12 +15,13 @@ import java.util.List;
 public class CompanyDetailsServiceImpl implements CompanyDetailsService {
     @Autowired
     private CompanyDetailsRepository companyDetailsRepository;
-    private CompanyDetails companyDetails;
+//    @Autowired
+//    private CompanyDetails companyDetails;
 
     // Enters Company Data in db when registering a company
     @Override
     public CompanyCreationResponse createCompany(CompanyServiceInput companyServiceInput) {
-        companyDetails= CompanyDetails.builder()
+        CompanyDetails companyDetails= CompanyDetails.builder()
                 .companyName(companyServiceInput.getCompanyName())
                 .industry(companyServiceInput.getIndustry())
                 .companySize(companyServiceInput.getCompanySize())
@@ -45,11 +46,10 @@ public class CompanyDetailsServiceImpl implements CompanyDetailsService {
         }
         return companyName;
     }
-
-    // Get Company Details by companyId
     @Override
-    public CompanyDetailsGet getCompanyDetails(Integer companyId){
-        companyDetails= companyDetailsRepository.getByCompanyDetailsId(companyId);
+    public CompanyDetailsGet getCompanyDetails(int companyId){
+        CompanyDetails companyDetails = companyDetailsRepository.findById(companyId)
+                .orElseThrow(() -> new RuntimeException("Company not found with id: " + companyId));
         return new CompanyDetailsGet(companyDetails.getCompanyName(),
                 companyDetails.getIndustry(),
                 companyDetails.getCompanySize(),
@@ -60,7 +60,6 @@ public class CompanyDetailsServiceImpl implements CompanyDetailsService {
 
     @Override
     public CompanyDetails companyDetailsByName(String companyName){
-        companyDetails=companyDetailsRepository.getByCompanyName(companyName);
-        return companyDetails;
+        return companyDetailsRepository.getByCompanyName(companyName);
     }
 }
