@@ -1,8 +1,11 @@
 package com.user.service.controller;
 
 import com.user.service.dto.AuthRequest;
+import com.user.service.dto.UserCreationInput;
+import com.user.service.dto.UserCreationResponse;
 import com.user.service.entity.Users;
 import com.user.service.repository.UserDetaiilsRepsitory;
+import com.user.service.service.CustomUserDetailService;
 import com.user.service.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +24,8 @@ public class AuthController {
     @Autowired
     JWTUtil jwtUtil;
     @Autowired
+    CustomUserDetailService customUserDetailService;
+    @Autowired
     UserDetaiilsRepsitory userDetaiilsRepsitory;
     @PostMapping("/token")
     public String generateToken(@RequestBody AuthRequest authRequest) {
@@ -37,6 +42,11 @@ public class AuthController {
     @GetMapping("/get/{username}")
     public Optional<Users> getUserByUsername(@PathVariable String username) {
         return userDetaiilsRepsitory.findByUsername(username);
+    }
+
+    @PostMapping("/createUser")
+    public UserCreationResponse createUser(@RequestBody UserCreationInput userCreationInput) {
+        return customUserDetailService.createUser(userCreationInput);
     }
 
 }
