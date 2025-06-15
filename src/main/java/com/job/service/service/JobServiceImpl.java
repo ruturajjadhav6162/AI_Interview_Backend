@@ -12,4 +12,6 @@ public interface JobServiceImpl {
     ResponseEntity<JobResponse> addJob(JobServiceInput jobserviceinput);
     HashMap<String,Object> get_job_count_by_companyid(int company_id);
     List<JobService> getAllJobs();
+
+    JobService getJobById(int id);
 }

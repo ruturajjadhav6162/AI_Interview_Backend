@@ -1,5 +1,6 @@
 package com.job.service.dto;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import lombok.Data;
 public class UserDetailsFromToken{
     private String username;
     private String role;
-    private int companyId;
+    private Integer companyId;
     private String tokenFrom;
 }
 
