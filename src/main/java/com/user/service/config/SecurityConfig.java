@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/user/token","/user/createUser").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/user/token","/user/createUser","/user/createProfessional").permitAll().anyRequest().authenticated())
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

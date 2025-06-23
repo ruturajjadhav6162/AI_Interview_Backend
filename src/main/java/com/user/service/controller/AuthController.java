@@ -1,8 +1,6 @@
 package com.user.service.controller;
 
-import com.user.service.dto.AuthRequest;
-import com.user.service.dto.UserCreationInput;
-import com.user.service.dto.UserCreationResponse;
+import com.user.service.dto.*;
 import com.user.service.entity.Users;
 import com.user.service.repository.UserDetaiilsRepsitory;
 import com.user.service.service.CustomUserDetailService;
@@ -29,14 +27,10 @@ public class AuthController {
     UserDetaiilsRepsitory userDetaiilsRepsitory;
     @PostMapping("/token")
     public String generateToken(@RequestBody AuthRequest authRequest) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-            );
-            return jwtUtil.generateToken(authRequest.getUsername());
-        } catch (Exception e) {
-            throw e;
-        }
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+        );
+        return jwtUtil.generateToken(authRequest.getUsername());
     }
 
     @GetMapping("/get/{username}")
@@ -47,6 +41,21 @@ public class AuthController {
     @PostMapping("/createUser")
     public UserCreationResponse createUser(@RequestBody UserCreationInput userCreationInput) {
         return customUserDetailService.createUser(userCreationInput);
+    }
+
+    @PostMapping("/createProfessional")
+    public CompanyProfessionalCreationResponse createProfessional(@RequestBody CompanyProfessionalDetailsInput companyProfessionalDetailsInput) {
+        return  customUserDetailService.createCompanyUser(companyProfessionalDetailsInput);
+    }
+
+    @GetMapping("/getAllUsers")
+    public List<Users> getAllUsers() {
+        return userDetaiilsRepsitory.findAllByRole(Role.USER);
+    }
+
+    @GetMapping("/getAll")
+    public List<Users> getAll() {
+        return userDetaiilsRepsitory.findAll();
     }
 
 }
