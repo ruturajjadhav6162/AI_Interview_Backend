@@ -30,6 +30,8 @@ public class JobServices implements JobServiceImpl{
     JWTUtil jwtUtil;
     private JobDetailsResponse jobDetailsResponse;
 
+    //    Uses Token Generated form CompanyService
+
     @Override
     public ResponseEntity<JobResponse> addJob(JobServiceInput jobserviceinput) {
         JobService jobservice = new JobService();
@@ -66,6 +68,8 @@ public class JobServices implements JobServiceImpl{
         return new ResponseEntity<>(jobResponse, HttpStatus.OK);
     }
 
+    //    Uses Token Generated form CompanyService
+
     @Override
     public HashMap<String, Object> get_job_count_by_companyid(int company_id){
 //        int company_id=0;
@@ -78,10 +82,14 @@ public class JobServices implements JobServiceImpl{
         return jobServiceMap;
     }
 
+    //    Uses Token Generated form UserService
+
     @Override
     public List<JobService> getAllJobs(){
         return jobServiceRepository.findAllByStatus("ACTIVE");
     }
+
+    //    Uses Token Generated form CompanyService
 
     @Override
     public JobService getJobById(int id) {
