@@ -9,12 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class CompanyProfessionalDetailsInput {
     private String companyName;
     private String username;
-    private  String firstName;
-    private  String lastName;
-    private String emailId;
-    private long phoneNumber;
-
 }

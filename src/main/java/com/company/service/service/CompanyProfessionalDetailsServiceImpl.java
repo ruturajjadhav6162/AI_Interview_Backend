@@ -3,11 +3,12 @@ package com.company.service.service;
 import com.company.service.dto.CompanyProfessionalCreationResponse;
 import com.company.service.dto.CompanyProfessionalDetailsInput;
 import com.company.service.entity.CompanyDetails;
-import com.company.service.entity.CompanyProfessionalDetails;
-import com.company.service.repository.CompanyDetailsRepository;
-import com.company.service.repository.CompanyProfessionalDetailsRepostory;
+import com.company.service.entity.CompanyProfessionalAndCompany;
+import com.company.service.repository.CompanyProfessionalAndCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CompanyProfessionalDetailsServiceImpl implements CompanyProfessionalDetailsService {
@@ -16,26 +17,26 @@ public class CompanyProfessionalDetailsServiceImpl implements CompanyProfessiona
     @Autowired
     private CompanyDetailsServiceImpl companyDetailsService;
     @Autowired
-    private CompanyProfessionalDetailsRepostory companyProfessionalDetailsRepostory;
+    private CompanyProfessionalAndCompanyRepository companyProfessionalAndCompanyRepository;
     private CompanyDetails companyDetails;
 
     @Override
     public CompanyProfessionalCreationResponse professionalCreation(CompanyProfessionalDetailsInput companyProfessionalDetailsInput) throws RuntimeException{
         try{
             CompanyDetails company=companyDetailsService.companyDetailsByName(companyProfessionalDetailsInput.getCompanyName());
-            CompanyProfessionalDetails companyProfessionalDetails=new CompanyProfessionalDetails(companyProfessionalDetailsInput.getFirstName(), companyProfessionalDetailsInput.getLastName(),companyProfessionalDetailsInput.getUsername(), companyProfessionalDetailsInput.getEmailId(), companyProfessionalDetailsInput.getPhoneNumber(),company);
-            companyProfessionalDetailsRepostory.save(companyProfessionalDetails);
+            CompanyProfessionalAndCompany companyProfessionalDetails=new CompanyProfessionalAndCompany(companyProfessionalDetailsInput.getUsername(),company);
+            companyProfessionalAndCompanyRepository.save(companyProfessionalDetails);
         }
         catch(Exception e){
             System.out.println(e);
             throw new RuntimeException("Error saving company professional details");
         }
-        return new CompanyProfessionalCreationResponse(companyProfessionalDetailsInput.getFirstName()+" "+companyProfessionalDetailsInput.getLastName(),companyProfessionalDetailsInput.getUsername(),companyProfessionalDetailsInput.getEmailId(),companyProfessionalDetailsInput.getCompanyName(),companyProfessionalDetailsInput.getPhoneNumber());
+        return new CompanyProfessionalCreationResponse(companyProfessionalDetailsInput.getUsername(), companyProfessionalDetailsInput.getCompanyName());
     }
 
     @Override
-    public CompanyProfessionalDetails getProfessionalDetails(int id) throws RuntimeException{
-        CompanyProfessionalDetails professionalInfo=companyProfessionalDetailsRepostory.findById(id).orElse(null);
+    public CompanyProfessionalAndCompany getProfessionalDetails(String username) throws RuntimeException{
+        CompanyProfessionalAndCompany professionalInfo= (CompanyProfessionalAndCompany) companyProfessionalAndCompanyRepository.findByUsername(username).orElse(null);
         if(professionalInfo!=null){
             return professionalInfo;
         }
@@ -44,14 +45,19 @@ public class CompanyProfessionalDetailsServiceImpl implements CompanyProfessiona
         }
     }
 
-    @Override
-    public CompanyProfessionalDetails professionalDetailsByUsername(String username) {
-        return companyProfessionalDetailsRepostory.findByUsername(username).orElse(null);
-    }
+//    @Override
+//    public CompanyProfessionalAndCompany professionalDetailsByUsername(String username) {
+//        return companyProfessionalAndCompanyRepository.findCompanyProfessionalAndCompanyByUsername(username).orElse(null);
+//    }
 
     @Override
     public int getCompayIdByUsername(String username) {
-        return professionalDetailsByUsername(username).getCompany().getCompanyDetailsId();
+        return getProfessionalDetails(username).getCompanyDetails().getCompanyDetailsId();
+    }
+
+    @Override
+    public List<CompanyProfessionalAndCompany> getAllProfessionalDetails(){
+        return companyProfessionalAndCompanyRepository.findAll();
     }
 
 

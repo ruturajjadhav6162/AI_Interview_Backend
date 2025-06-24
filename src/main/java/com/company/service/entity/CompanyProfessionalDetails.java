@@ -13,7 +13,7 @@ public class CompanyProfessionalDetails {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int companyProfessionalId;
     private String username;
-
+    private Role role;
     private  String firstName;
     private  String lastName;
     private String emailId;
@@ -30,10 +30,17 @@ public class CompanyProfessionalDetails {
         this.emailId = emailId;
         this.phoneNumber = phoneNumber;
         this.company=company;
+        this.role=Role.COMPANY;
     }
 
     public CompanyProfessionalDetails() {
 
     }
+
 }
+enum Role {
+    USER,
+    COMPANY;
+}
+
 

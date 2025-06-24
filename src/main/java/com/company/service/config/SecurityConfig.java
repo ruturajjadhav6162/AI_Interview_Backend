@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("companyProfessional/createProfessional","companyProfessional/getAllProfessional","company/allCompanyNames","company/createCompany").permitAll().anyRequest().authenticated())
                 .addFilterBefore(jwtfilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
