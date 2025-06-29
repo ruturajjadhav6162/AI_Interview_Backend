@@ -1,6 +1,8 @@
 package com.interview.service.service;
 
 import com.interview.service.dto.Conversation;
+import com.interview.service.entity.Interview;
+import com.interview.service.repository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import java.util.List;
 @Service
 public class InterviewService implements InterviewServiceImpl {
     List<Conversation> conversations=new ArrayList<>();
+    @Autowired
+    InterviewRepository interviewRepository;
     @Override
     public String addConversation(String message) {
         Conversation conversation = new Conversation();
@@ -22,7 +26,13 @@ public class InterviewService implements InterviewServiceImpl {
     }
 
     public String addConversationInTable(List<Conversation> conversations) {
-
-        return "hi in addConversationInTable";
+//        Interview interview = Interview.builder()
+//                .jobId()
+//                .companyId()
+//                .userId()
+//                .conversation(conversations)
+//                .build();
+//        interviewRepository.save(interview);
+        return "Conversation Stored successfully";
     }
 }

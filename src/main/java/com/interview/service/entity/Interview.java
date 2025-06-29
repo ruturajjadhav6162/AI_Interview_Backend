@@ -2,12 +2,14 @@ package com.interview.service.entity;
 
 import com.interview.service.dto.Conversation;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 @Entity
+@Builder
 @Table(name="interview_service")
 public class Interview {
     @Id
