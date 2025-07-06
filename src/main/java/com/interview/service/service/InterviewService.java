@@ -8,21 +8,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class InterviewService implements InterviewServiceImpl {
     List<Conversation> conversations=new ArrayList<>();
     @Autowired
     InterviewRepository interviewRepository;
+    @Autowired
+    gRPCClientService gRPCClientService;
     @Override
-    public String addConversation(String message) {
+    public String addConversation(String message,String token) {
         Conversation conversation = new Conversation();
 
         conversation.setCandidateMessage(message);
 
-
+        String message1= null;
+        try {
+            message1 = gRPCClientService.getResponse(message,token).get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
         conversations.add(conversation);
-        return "Hi retrieving info from dd conversation ";
+        return message1;
     }
 
     public String addConversationInTable(List<Conversation> conversations) {

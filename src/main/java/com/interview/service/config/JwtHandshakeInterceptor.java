@@ -34,6 +34,7 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
             if (token != null && jwtUtil.validateToken(token)) {
                 Claims body = jwtUtil.extractToken(token);
                 attributes.put("username", body.getSubject());
+                attributes.put("token",token);
                 List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority((String) body.get("role")));
                 attributes.put("username", body.getSubject());
                 attributes.put("authorities", authorities);
