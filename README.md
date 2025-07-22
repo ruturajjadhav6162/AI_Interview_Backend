@@ -1,1 +1,93 @@
-# AI_Interview_Backend
+
+# 🧑‍💼 User Service - Microservice Architecture
+
+This microservice handles user registration (normal and professional), authentication, and token issuance. It is also the entry point in a chain of JWT-based authentication across services.
+
+---
+
+## 📌 Endpoints
+
+### 🔐 1. Generate JWT Token
+
+**URL:** `POST /user/token`  
+**Description:** Authenticates user and returns a JWT token.  
+**Request Body:**
+```json
+{
+  "username": "user@example.com",
+  "password": "yourPassword"
+}
+```
+**Response:** JWT token as string
+```text
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+---
+
+### 👤 2. Get User by Username
+
+**URL:** `GET /user/get/{username}`  
+**Description:** Retrieves user details by username.  
+**Response:** `Users` object as JSON
+
+---
+
+### ➕ 3. Create Normal User
+
+**URL:** `POST /user/createUser`  
+**Request Body:** `UserCreationInput`
+```json
+{
+  "username": "user@example.com",
+  "password": "pass123",
+  "fullName": "John Doe",
+  "mobile": "9876543210"
+}
+```
+**Response:** `UserCreationResponse`
+```json
+{
+  "id": 101,
+  "status": "SUCCESS",
+  "message": "User created successfully"
+}
+```
+
+---
+
+### 🧑‍💼 4. Create Professional User
+
+**URL:** `POST /user/createProfessional`  
+**Request Body:** `CompanyProfessionalDetailsInput`
+```json
+{
+  "username": "pro@example.com",
+  "password": "propass",
+  "companyName": "TechCorp",
+  "designation": "Developer"
+}
+```
+**Response:** `CompanyProfessionalCreationResponse`
+```json
+{
+  "professionalId": 201,
+  "message": "Professional user created successfully"
+}
+```
+
+---
+
+### 📃 5. Get All Users (Role.USER only)
+
+**URL:** `GET /user/getAllUsers`  
+**Description:** Lists all users with `Role.USER`
+
+---
+
+### 📃 6. Get All Users (All Roles)
+
+**URL:** `GET /user/getAll`  
+**Description:** Lists all registered users of all roles
+
+---
