@@ -14,8 +14,8 @@ This microservice handles user registration (normal and professional), authentic
 **Request Body:**
 ```json
 {
-  "username": "user@example.com",
-  "password": "yourPassword"
+  "username": "user1",
+  "password": "user1"
 }
 ```
 **Response:** JWT token as string
@@ -39,18 +39,22 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 **Request Body:** `UserCreationInput`
 ```json
 {
-  "username": "user@example.com",
-  "password": "pass123",
-  "fullName": "John Doe",
-  "mobile": "9876543210"
+  "username": "user",
+  "password": "user",
+  "firstName":"Ruturaj",
+  "lastName":"Jadhav",
+  "email":"ruturajjadhav6162@gmail.com",
+  "phone":9994448886
 }
 ```
 **Response:** `UserCreationResponse`
 ```json
 {
-  "id": 101,
-  "status": "SUCCESS",
-  "message": "User created successfully"
+  "username": "user",
+  "firstName": "Ruturaj",
+  "lastName": "Jadhav",
+  "email": "ruturajjadhav6162@gmail.com",
+  "phone": 9325882246
 }
 ```
 
@@ -62,17 +66,23 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 **Request Body:** `CompanyProfessionalDetailsInput`
 ```json
 {
-  "username": "pro@example.com",
-  "password": "propass",
-  "companyName": "TechCorp",
-  "designation": "Developer"
+  "companyName":"TechNova Solutions",
+  "username": "user1",
+  "password":"user1",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@technova.com",
+  "phone": "9876543210"
 }
 ```
 **Response:** `CompanyProfessionalCreationResponse`
 ```json
 {
-  "professionalId": 201,
-  "message": "Professional user created successfully"
+  "professionalName": "John Doe",
+  "username": "user1",
+  "email": "john.doe@technova.com",
+  "professionalCompany": "TechNova Solutions",
+  "phone": 9876543210
 }
 ```
 
