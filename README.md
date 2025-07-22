@@ -58,7 +58,7 @@ Authorization: Bearer <JWT_with_companyId>
 - **Method:** `GET`
 - **URL:** `/job_service/getcount`
 - **Description:** Get number of jobs posted by the authenticated company.
-
+- **JWT Token use:** uses **companyId** from jwt token received from company service.
 **Authorization Header:**
 ```makefile
 Authorization: Bearer <JWT_with_companyId>
