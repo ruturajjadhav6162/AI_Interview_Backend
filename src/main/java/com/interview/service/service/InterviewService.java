@@ -6,6 +6,7 @@ import com.interview.service.repository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -20,17 +21,20 @@ public class InterviewService implements InterviewServiceImpl {
     @Override
     public String addConversation(String message,String token) {
         Conversation conversation = new Conversation();
-
         conversation.setCandidateMessage(message);
-
-        String message1= null;
+        String message1=null;
         try {
             message1 = gRPCClientService.getResponse(message,token).get();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+            if (message1 != null) {
+                conversation.setAiMessage(message1);
+            }
+            else {
+            throw new RuntimeException("No AI Response");
+        }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        conversation.setConversationDateTime(LocalDateTime.now());
         conversations.add(conversation);
         return message1;
     }

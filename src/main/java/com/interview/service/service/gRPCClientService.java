@@ -24,7 +24,7 @@ public class gRPCClientService {
     public gRPCClientService() {
         // Create channel manually (replace host & port)
         ManagedChannel channel = ManagedChannelBuilder
-                .forAddress("localhost", 9090)  // your gRPC server host and port
+                .forAddress("localhost", 9091)  // your gRPC server host and port
                 .usePlaintext()                 // disable TLS for local testing
                 .build();
 
@@ -35,7 +35,8 @@ public class gRPCClientService {
     public CompletableFuture<String> getResponse(String message,String token) {
         Message msg = Message.newBuilder().setMessage(message).build();
         Claims claims=jwtUtil.extractToken(token);
-        String tokenData= claims.get("userId") + " " + claims.get("jobId") + " " + claims.get("companyId");
+//        String tokenData= claims.get("userId") + " " + claims.get("jobId") + " " + claims.get("companyId");
+        String tokenData= 59 + " " + 62 + " " + 19;
         CompletableFuture<String> future = new CompletableFuture<>();
 
         StreamObserver<Response> responseObserver = new StreamObserver<>() {

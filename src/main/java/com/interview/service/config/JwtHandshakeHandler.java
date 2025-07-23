@@ -19,11 +19,10 @@ public class JwtHandshakeHandler extends DefaultHandshakeHandler {
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler,
                                       Map<String, Object> attributes) {
           String username = (String) attributes.get("username");
-          String token = (String) attributes.get("token");
             List<GrantedAuthority> authorities = (List<GrantedAuthority>) attributes.get("authorities");
 
             Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(username+" "+token, null, authorities);
+                    new UsernamePasswordAuthenticationToken(username, null, authorities);
 
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             context.setAuthentication(authentication);
