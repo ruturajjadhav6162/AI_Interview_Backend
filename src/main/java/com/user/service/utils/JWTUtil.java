@@ -1,8 +1,10 @@
 package com.user.service.utils;
 
+import com.user.service.entity.Users;
 import com.user.service.repository.UserDetaiilsRepsitory;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import java.util.Optional;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,10 @@ public class JWTUtil {
         Date now = new Date();
         long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
         Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
-        HashMap<String, Object> claims = new HashMap<String, Object>();
-        claims.put("role", userRepository.findByUsername(username).get().getRole());
+        HashMap<String, Object> claims = new HashMap<>();
+        Users user = userRepository.findByUsername(username);
+        if(user!=null){
+        claims.put("role", user.getRole().name());
         claims.put("tokenFrom","User_Service");
         return Jwts.builder()
                 .subject(username)
@@ -33,6 +37,8 @@ public class JWTUtil {
                 .expiration(expiry)
                 .signWith( SECRET_KEY)
                 .compact();
+    }
+    throw new RuntimeException("User not found");
     }
 
     public String extractUsername(String token) {

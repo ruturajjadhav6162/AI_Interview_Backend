@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserDetaiilsRepsitory extends JpaRepository<Users, Integer> {
-    Optional<Users> findByUsername(String username);
+    Users findByUsername(String username);
 
     List<Users> findAllByRole(Role role);
 }

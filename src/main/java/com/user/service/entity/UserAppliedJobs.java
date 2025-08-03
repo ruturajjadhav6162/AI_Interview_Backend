@@ -1,11 +1,16 @@
 package com.user.service.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "user_registration")
 @Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserAppliedJobs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

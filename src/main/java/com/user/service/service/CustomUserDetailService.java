@@ -22,29 +22,29 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found "));
+        return userRepository.findByUsername(username);
     }
 
     public UserCreationResponse createUser(UserCreationInput userCreationInput) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
-            Users user = Users.builder()
-                    .username(userCreationInput.getUsername())
-                    .password(passwordEncoder.encode(userCreationInput.getPassword()))
-                    .email(userCreationInput.getEmail())
-                    .firstName(userCreationInput.getFirstName())
-                    .lastName(userCreationInput.getLastName())
-                    .phone(userCreationInput.getPhone())
-                    .role(Role.USER)
-                    .build();
+            Users user = new Users(
+                    userCreationInput.getUsername(),
+                    passwordEncoder.encode(userCreationInput.getPassword()),
+                    Role.USER,
+                    userCreationInput.getEmail(),
+                    userCreationInput.getPhone(),
+                    userCreationInput.getFirstName(),
+                    userCreationInput.getLastName()
+            );
             userRepository.save(user);
-            return UserCreationResponse.builder()
-                    .username(userCreationInput.getUsername())
-                    .email(userCreationInput.getEmail())
-                    .firstName(userCreationInput.getFirstName())
-                    .lastName(userCreationInput.getLastName())
-                    .phone(userCreationInput.getPhone())
-                    .build();
+            return new UserCreationResponse(
+                    userCreationInput.getUsername(),
+                    userCreationInput.getEmail(),
+                    userCreationInput.getFirstName(),
+                    userCreationInput.getLastName(),
+                    userCreationInput.getPhone()
+            );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -52,10 +52,10 @@ public class CustomUserDetailService implements UserDetailsService {
 
     public CompanyProfessionalCreationResponse createCompanyUser(CompanyProfessionalDetailsInput companyProfessionalDetailsInput) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        CompanyProfessionalAndCompanyRegistration companyProfessional=CompanyProfessionalAndCompanyRegistration.builder()
-                .companyName(companyProfessionalDetailsInput.getCompanyName())
-                .username(companyProfessionalDetailsInput.getUsername())
-                .build();
+        CompanyProfessionalAndCompanyRegistration companyProfessional= new CompanyProfessionalAndCompanyRegistration(
+                companyProfessionalDetailsInput.getCompanyName(),
+                companyProfessionalDetailsInput.getUsername()
+        );
         WebClient webClient = WebClient.builder().build();
         webClient.post()
                 .uri("http://localhost:8002/companyProfessional/createProfessional")
@@ -66,23 +66,24 @@ public class CustomUserDetailService implements UserDetailsService {
                 .bodyToMono(CompanyProfessionalCreationResponse.class)
                 .block();;
         try {
-            Users user = Users.builder()
-                    .username(companyProfessionalDetailsInput.getUsername())
-                    .password(passwordEncoder.encode(companyProfessionalDetailsInput.getPassword()))
-                    .email(companyProfessionalDetailsInput.getEmail())
-                    .firstName(companyProfessionalDetailsInput.getFirstName())
-                    .lastName(companyProfessionalDetailsInput.getLastName())
-                    .phone(companyProfessionalDetailsInput.getPhone())
-                    .role(Role.COMPANY)
-                    .build();
+            Users user  = new Users(
+                    companyProfessionalDetailsInput.getUsername(),
+                    passwordEncoder.encode(companyProfessionalDetailsInput.getPassword()),
+                    Role.COMPANY,
+                    companyProfessionalDetailsInput.getEmail(),
+                    companyProfessionalDetailsInput.getPhone(),
+                    companyProfessionalDetailsInput.getFirstName(),
+                    companyProfessionalDetailsInput.getLastName()
+            );
             userRepository.save(user);
-            return CompanyProfessionalCreationResponse.builder()
-                    .username(companyProfessionalDetailsInput.getUsername())
-                    .professionalName(companyProfessionalDetailsInput.getFirstName()+" "+companyProfessionalDetailsInput.getLastName())
-                    .email(companyProfessionalDetailsInput.getEmail())
-                    .phone(companyProfessionalDetailsInput.getPhone())
-                    .professionalCompany(companyProfessionalDetailsInput.getCompanyName())
-                    .build();
+            return new CompanyProfessionalCreationResponse(
+                    companyProfessionalDetailsInput.getUsername(),
+                    companyProfessionalDetailsInput.getFirstName() + " " + companyProfessionalDetailsInput.getLastName(),
+                    companyProfessionalDetailsInput.getEmail(),
+                    companyProfessionalDetailsInput.getCompanyName(),
+                    companyProfessionalDetailsInput.getPhone()
+
+            );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

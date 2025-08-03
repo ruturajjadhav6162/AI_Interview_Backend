@@ -34,7 +34,7 @@ public class AuthController {
     }
 
     @GetMapping("/get/{username}")
-    public Optional<Users> getUserByUsername(@PathVariable String username) {
+    public Users getUserByUsername(@PathVariable String username) {
         return userDetaiilsRepsitory.findByUsername(username);
     }
 
