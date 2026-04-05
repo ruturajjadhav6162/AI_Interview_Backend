@@ -20,13 +20,15 @@ public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private UserDetaiilsRepsitory userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
     }
 
     public UserCreationResponse createUser(UserCreationInput userCreationInput) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
             Users user = new Users(
                     userCreationInput.getUsername(),
