@@ -3,7 +3,7 @@ FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 
-COPY target/*.jar app.jar
+COPY ./*.jar app.jar
 
 EXPOSE 8000
 ENV SPRING_PROFILES_ACTIVE=docker
