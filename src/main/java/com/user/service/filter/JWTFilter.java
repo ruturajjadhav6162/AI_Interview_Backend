@@ -28,6 +28,15 @@ public class JWTFilter extends OncePerRequestFilter {
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String path = request.getRequestURI();
+
+        if (path.equals("/user/token") ||
+                path.equals("/user/createUser") ||
+                path.equals("/user/createProfessional")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
         String authHeader=request.getHeader("Authorization");
         String token=null;
         String username=null;
