@@ -28,10 +28,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    JWTFilter jwtFilter;
+//    @Autowired
+//    JWTFilter jwtFilter;
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http,JWTFilter jwtFilter) throws Exception {
         http
                 .cors()
                 .and()
