@@ -1,7 +1,5 @@
 package com.user.service.dto;
 
-import lombok.*;
-
 
 public class CompanyProfessionalDetailsInput {
     private String companyName;

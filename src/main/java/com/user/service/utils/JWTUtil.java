@@ -24,13 +24,14 @@ public class JWTUtil {
 
         Date now = new Date();
         long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+//        long EXPIRATION_TIME=5 * 1000; // 5 sec
         Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
         HashMap<String, Object> claims = new HashMap<>();
         Users user = userRepository.findByUsername(username);
         if(user!=null){
         claims.put("role", user.getRole().name());
         claims.put("tokenFrom","User_Service");
-        return Jwts.builder()
+        return user.getRole().name()+" "+Jwts.builder()
                 .subject(username)
                 .claims(claims)
                 .issuedAt(now)
@@ -47,10 +48,11 @@ public class JWTUtil {
     }
 
     private Claims extractClaims(String token) {
+                    String[] tokens = token.split(" ");
         return Jwts.parser()
                 .verifyWith(SECRET_KEY)
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(tokens[1])
                 .getPayload();
     }
 

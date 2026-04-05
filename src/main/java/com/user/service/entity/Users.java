@@ -2,7 +2,7 @@ package com.user.service.entity;
 
 import com.user.service.dto.Role;
 import jakarta.persistence.*;
-import lombok.*;
+//import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,6 +37,10 @@ public class Users implements UserDetails {
         this.phone = phone;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Users() {
+
     }
 
     @Override
