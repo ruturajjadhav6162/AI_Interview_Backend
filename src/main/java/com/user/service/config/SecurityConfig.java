@@ -40,10 +40,10 @@ public class SecurityConfig {
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-    @Bean
-    public UserDetailsService userDetailsService(){
-        return new CustomUserDetailService();
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(){
+//        return new CustomUserDetailService();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
