@@ -5,6 +5,7 @@ import com.user.service.entity.Users;
 import com.user.service.repository.UserDetaiilsRepsitory;
 import jakarta.servlet.http.HttpServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
+@Primary
 public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private UserDetaiilsRepsitory userRepository;
