@@ -24,7 +24,7 @@ public class InterviewService implements InterviewServiceImpl {
         conversation.setCandidateMessage(message);
         String message1=null;
         try {
-            message1 = gRPCClientService.getResponse(message,token).get();
+            message1 = gRPCClientService.getResponse("hello",message);
             if (message1 != null) {
                 conversation.setAiMessage(message1);
             }

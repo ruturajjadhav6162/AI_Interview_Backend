@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 @Component
@@ -33,8 +34,9 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
 
             if (token != null && jwtUtil.validateToken(token)) {
                 Claims body = jwtUtil.extractToken(token);
-                attributes.put("username", body.getSubject());
                 attributes.put("token",token);
+                List<String> chats=new ArrayList<>();
+                attributes.put("chats",chats);
                 List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority((String) body.get("role")));
                 attributes.put("username", body.getSubject());
                 attributes.put("authorities", authorities);
