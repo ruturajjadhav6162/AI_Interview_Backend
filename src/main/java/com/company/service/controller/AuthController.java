@@ -22,6 +22,7 @@ public class AuthController {
         String token = null;
         if (authorization != null && authorization.startsWith("Bearer ")) {
             token = authorization.substring(7);
+//            String[] tokens = token.split(" ");
             Claims body = jwtUtil.extractToken(token);
             int companyId=companyProfessionalDetailsService.getCompayIdByUsername(body.getSubject());
             return jwtUtil.generateToken(companyId,request);

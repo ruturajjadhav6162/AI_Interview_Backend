@@ -3,11 +3,8 @@ package com.company.service.controller;
 import com.company.service.dto.CompanyProfessionalCreationResponse;
 import com.company.service.dto.CompanyProfessionalDetailsInput;
 import com.company.service.entity.CompanyProfessionalAndCompany;
-import com.company.service.entity.CompanyProfessionalDetails;
-import com.company.service.service.CompanyProfessionalDetailsService;
 import com.company.service.service.CompanyProfessionalDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +28,10 @@ public class CompanyProfessionalController {
     @GetMapping("getAllProfessional")
     public List<CompanyProfessionalAndCompany> getAllProfessional(){
         return companyProfessionalDetailsService.getAllProfessionalDetails();
+    }
+
+    @GetMapping("id/{username}")
+    public int getProfessionalId(@PathVariable String username) {
+        return companyProfessionalDetailsService.getProfessionalDetails(username).getCompanyDetails().getCompanyDetailsId();
     }
 }
