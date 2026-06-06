@@ -34,6 +34,7 @@ public class JWTFilter extends OncePerRequestFilter {
         }
         if(token!=null&& SecurityContextHolder.getContext().getAuthentication()==null) {
             if(jwtUtil.validateToken(token)){
+//                String[] tokens = token.split(" ");
                 Claims body=jwtUtil.extractToken(token);
                 String role = (String) body.get("role");
                 List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));

@@ -20,10 +20,11 @@ public class JWTUtil {
 //        Date now = new Date();
 //        long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 //        Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
+        String[] tokens = token.split(" ");
         Claims body = Jwts.parser()
                 .verifyWith(SECRET_KEY)
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(tokens[1])
                 .getPayload();
         return body;
     }
@@ -32,7 +33,8 @@ public class JWTUtil {
     }
 
     private boolean expiration(String token) {
-        Claims body = extractToken(token);
+//        String[] tokens = token.split(" ");
+        Claims body = this.extractToken(token);
         return body.getExpiration().before(new Date());
     }
     public String generateToken(int companyid, HttpServletRequest request) {
